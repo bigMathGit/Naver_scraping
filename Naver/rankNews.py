@@ -20,13 +20,11 @@ def getDetailNews(result,newsList):
 
 sectionId = [100,101,102,103,104,105]
 scrapingDate = "20180702"
-
+getNews.open()
 result = pd.DataFrame(columns=['title', 'text', 'wDate', 'name', 'emails', 'Media', 'area', 'grades', 'gain1', 'gain2', 'gain3','gain4', 'gain5', 'rank'])
 for section in sectionId:
-    getNews.open()
     newsList = getNews.getRank(section, 30, scrapingDate)
-    pd = getDetailNews(result,newsList)
-    print('pd :', pd)
-    getNews.close()
-
+    result = getDetailNews(result,newsList)
+    print('pd :', result)
+getNews.close()
 result.to_csv('result.csv', index=False)
