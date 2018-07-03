@@ -17,9 +17,9 @@ class getNews:
         time.sleep(3)
         html = self.driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
-        title = pd.Series(soup.select('div.article_header > div.article_info > h3#articleTitle')[0].get_text(),index=len(result))
-        text = pd.Series(soup.select('div#articleBodyContents')[0].get_text().replace('\n\n\n\n\n// flash 오류를 우회하기 위한 함수 추가\nfunction _flash_removeCallback() {}\n\n',''),index=len(result))
-        wDate = pd.Series(soup.select('div.sponsor > span.t11')[0].get_text(),index=len(result))
+        title = pd.Series(soup.select('div.article_header > div.article_info > h3#articleTitle')[0].get_text())
+        text = pd.Series(soup.select('div#articleBodyContents')[0].get_text().replace('\n\n\n\n\n// flash 오류를 우회하기 위한 함수 추가\nfunction _flash_removeCallback() {}\n\n',''))
+        wDate = pd.Series(soup.select('div.sponsor > span.t11')[0].get_text())
         name = pd.Series('')
         # email 여러개 들어 있는 케이스
         emails =[]
@@ -29,16 +29,16 @@ class getNews:
                 emails.append(email[i-2].text.strip()+"@"+email[i-1].text.strip()+email[i].text.strip()+".kr")
             if email[i].text.strip() == 'com':
                 emails.append(email[i - 2].text.strip() + "@" + email[i - 1].text.strip() + email[i].text.strip())
-        emails = pd.Series(emails,index=len(result))
-        Media = pd.Series(soup.select('div.article_header > div.press_logo > a > img')[0].get_attribute_list('title')[0],index=len(result))
-        area  = pd.Series(newsList[1],index=len(result))
+        emails = pd.Series(emails)
+        Media = pd.Series(soup.select('div.article_header > div.press_logo > a > img')[0].get_attribute_list('title')[0])
+        area  = pd.Series(newsList[1])
         grades = pd.Series(soup.select('div._reactionModule.u_likeit > a  > span.u_likeit_text._count.num')[0].get_text())
-        gain1 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.good > a > span.u_likeit_list_count._count')[0].get_text(),index=len(result))
-        gain2 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.warm > a > span.u_likeit_list_count._count')[0].get_text(),index=len(result))
-        gain3 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.sad > a > span.u_likeit_list_count._count')[0].get_text(),index=len(result))
-        gain4 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.angry > a > span.u_likeit_list_count._count')[0].get_text(),index=len(result))
-        gain5 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.want > a > span.u_likeit_list_count._count')[0].get_text(),index=len(result))
-        rank = pd.Series(newsList[2],index=len(result))
+        gain1 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.good > a > span.u_likeit_list_count._count')[0].get_text())
+        gain2 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.warm > a > span.u_likeit_list_count._count')[0].get_text())
+        gain3 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.sad > a > span.u_likeit_list_count._count')[0].get_text())
+        gain4 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.angry > a > span.u_likeit_list_count._count')[0].get_text())
+        gain5 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.want > a > span.u_likeit_list_count._count')[0].get_text())
+        rank = pd.Series(newsList[2])
         # result['comment'] = soup.select('div.u_cbox_head > a > span.u_cbox_count')[0].get_text()
         # result['male'] = soup.select('div.u_cbox_chart_sex > div.u_cbox_chart_progress.u_cbox_chart_male > span.u_cbox_chart_per')[0].get_text()
         # result['female'] = soup.select('div.u_cbox_chart_sex > div.u_cbox_chart_progress.u_cbox_chart_female > span.u_cbox_chart_per')[0].get_text()
@@ -55,7 +55,7 @@ class getNews:
         if len(result) == 0 :
             result = temp
         else:
-            pd.concat([result,temp])
+            result = pd.concat([result,temp])
             print(result)
 
         return result
