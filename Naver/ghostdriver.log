@@ -1,0 +1,22 @@
+[INFO  - 2018-03-12T11:47:45.381Z] GhostDriver - Main - running on port 55719
+[INFO  - 2018-03-12T11:47:49.574Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2018-03-12T11:47:49.574Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - page.customHeaders:  - {}
+[INFO  - 2018-03-12T11:47:49.575Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"windows-10-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2018-03-12T11:47:49.575Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 307ab310-25eb-11e8-812b-892d68ec669f
+[ERROR - 2018-03-12T11:47:50.381Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - page.onError - msg: TypeError: null is not an object (evaluating 'this._oPlayer.attach')
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2018-03-12T11:47:50.381Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - page.onError - stack:
+  _initVariables (http://static.news.naver.net/pnews/resources/20180309_152426/js/news.service.js:1)
+  $init (http://static.news.naver.net/pnews/resources/20180309_152426/js/news.service.js:1)
+  typeClass (http://static.news.naver.net/pnews/resources/20180309_152426/js/news.jindo.js:1)
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2018-03-12T11:47:50.759Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - page.onError - msg: TypeError: null is not an object (evaluating 'da_ua.match(/Version\/([0-9\.]+)/i)[1]')
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2018-03-12T11:47:50.760Z] Session [307ab310-25eb-11e8-812b-892d68ec669f] - page.onError - stack:
+  searchBrowserVersion (http://tveta.naver.net/libs/assets/js/pc/main/min/pc.veta.core.min.js?20171121:1)
+  init (http://tveta.naver.net/libs/assets/js/pc/main/min/pc.veta.core.min.js?20171121:1)
+
+  phantomjs://platform/console++.js:263 in error
