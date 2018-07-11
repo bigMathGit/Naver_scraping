@@ -39,14 +39,6 @@ class getNews:
         gain4 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.angry > a > span.u_likeit_list_count._count')[0].get_text())
         gain5 = pd.Series(soup.select('div._reactionModule.u_likeit > ul > li.u_likeit_list.want > a > span.u_likeit_list_count._count')[0].get_text())
         rank = pd.Series(newsList[2])
-        # result['comment'] = soup.select('div.u_cbox_head > a > span.u_cbox_count')[0].get_text()
-        # result['male'] = soup.select('div.u_cbox_chart_sex > div.u_cbox_chart_progress.u_cbox_chart_male > span.u_cbox_chart_per')[0].get_text()
-        # result['female'] = soup.select('div.u_cbox_chart_sex > div.u_cbox_chart_progress.u_cbox_chart_female > span.u_cbox_chart_per')[0].get_text()
-        # result['age1'] =  soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[0].get_text()
-        # result['age2'] =  soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[1].get_text()
-        # result['age3'] =  soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[2].get_text()
-        # result['age4'] =  soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[3].get_text()
-        # result['age5'] =  soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[4].get_text()
         temp = DataFrame({'title' :title,'text':text,'wDate':wDate,'name':name,'emails':emails,'Media': Media,'area' :area,'grades' : grades,'gain1':gain1,'gain2':gain2,'gain3':gain3,'gain4':gain4,'gain5':gain5,'rank':rank},
                          columns=['title', 'text', 'wDate', 'name', 'emails', 'Media', 'area', 'grades', 'gain1', 'gain2', 'gain3',
                  'gain4', 'gain5', 'rank'])
@@ -60,6 +52,44 @@ class getNews:
 
         return result
 
+
+    def NewsComment(self, result, newsList):
+        self.driver.implicitly_wait(1)
+        self.driver.get(newsList[3])
+        time.sleep(3)
+        html = self.driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+
+        comment = pd.Series(soup.select('div.u_cbox_head > a > span.u_cbox_count')[0].get_text())
+        male = pd.Series(soup.select('div.u_cbox_chart_sex > div.u_cbox_chart_progress.u_cbox_chart_male > span.u_cbox_chart_per')[0].get_text())
+        female = pd.Series(soup.select('div.u_cbox_chart_sex > div.u_cbox_chart_progress.u_cbox_chart_female > span.u_cbox_chart_per')[0].get_text())
+        age1 =  pd.Series(soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[0].get_text())
+        age2 =  pd.Series(soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[1].get_text())
+        age3 =  pd.Series(soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[2].get_text())
+        age4 =  pd.Series(soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[3].get_text())
+        age5 =  pd.Series(soup.select('div.u_cbox_chart_age > div > span > span.u_cbox_chart_per ')[4].get_text())
+        comments = soup.select('div.u_cbox_comment_box > div.u_cbox_area > div.u_cbox_text_wrap > span.u_cbox_contents')
+        comms = ''
+        for i,comm in enumerate(comments):
+            comms = comms + str(i+1) + '. '+ str(comm.get_text()) + '\n'
+        comments = pd.Series(comms)
+
+        temp = DataFrame({'comment' :comment,'male':male,'female':female,'age1':age1,'age2':age2,'age3': age3,'age4' :age4,'age5' : age5, 'comments' : comments},
+                         columns=['comment', 'male', 'female', 'age1', 'age2', 'age3', 'age4', 'age5', 'comments'])
+
+
+        if len(result) == 0 :
+            result = temp
+        else:
+            result = pd.concat([result,temp])
+            print(result)
+
+        return result
+
+
+
+
+
     def getRank(self,section,maxNum,scrapingDate):
         result = []
         self.driver.implicitly_wait(1)
@@ -72,16 +102,6 @@ class getNews:
         for i in range(1, maxNum + 1):
             href = soup.select('div.ranking_text > div.ranking_headline >  a')[i - 1].get_attribute_list('href')[0]
             print(soup.select('div.ranking_text > div.ranking_headline >  a')[i - 1].get_attribute_list('href')[0])
-            # if i <= 3:
-            #     print(soup.select('div.ranking_text > div.ranking_headline >  a')[i-1].get_attribute_list('href')[0])
-            #     href = soup.select('div.ranking_top3 > ol > li.num' + str(i) + ' > dl > dt > a')[0].get_attribute_list('href')[0]
-            # elif i <= 10:
-            #     href = soup.select('div.ranking_section.ranfir2 > ol > li.gnum' + str(i) + ' > dl > dt > a')[0].get_attribute_list('href')[0]
-            # elif i <= 30:
-            #     href = \
-            #     soup.select('div.ranking_section > ol > li.gnum' + str(i) + ' > dl > dt > a')[0].get_attribute_list('href')[0]
-            # else:
-            #     print(i, 'is out of index')
             result.append([scrapingDate, section, i, "http://news.naver.com/" + href])
 
         return result
