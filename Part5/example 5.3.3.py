@@ -1,5 +1,5 @@
 import pymysql
-conn = pymysql.connect(host='127.0.0.1', user='root', passwd='wkdrl9569!', db='mysql')
+conn = pymysql.connect(host='127.0.0.1', user='root', passwd='', db='mysql')
 
 cur = conn.cursor()
 cur.execute("USE scraping")
